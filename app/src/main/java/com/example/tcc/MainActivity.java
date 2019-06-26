@@ -12,8 +12,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.priyankvasa.android.cameraviewex.CameraView;
+import com.priyankvasa.android.cameraviewex.Image;
 
 import java.util.Locale;
+import java.util.Objects;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
@@ -27,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         mCameraView = findViewById(R.id.camera);
         tts = new TextToSpeech(this, this);
 
@@ -40,13 +45,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 //            }
 //        });
 
-//        mCameraView.addPictureTakenListener(new Function1<Image, Unit>() {
-//            @Override
-//            public Unit invoke(Image image) {
-//                Toast.makeText(MainActivity.this, "Bateu a foto", Toast.LENGTH_SHORT).show();
-//                return null;
-//            }
-//        });
+        mCameraView.addPictureTakenListener(new Function1<Image, Unit>() {
+            @Override
+            public Unit invoke(Image image) {
+                Toast.makeText(MainActivity.this, "Bateu a foto", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +99,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
                 Toast.makeText(MainActivity.this, "Idioma não suportado!", Toast.LENGTH_SHORT).show();
             }else{
-                speakText("Bom dia, Oziel!");
+                Toast.makeText(MainActivity.this, "OK!!", Toast.LENGTH_SHORT).show();
+                //speakText("");
             }
         }
     }
